@@ -35,6 +35,11 @@ def _bytes_to_human(n: int) -> str:
     return f"{value:.2f} EB"
 
 
+def _bytes_to_mb(n: int) -> float:
+    # Convert bytes to megabytes
+    return n / (1024.0 * 1024.0)
+
+
 def update_daily_disk_csv(path_to_check: Optional[str] = None, out_dir: Optional[str] = None) -> str:
     """
     Record the disk usage for `path_to_check` into a CSV named with today's date
@@ -68,9 +73,9 @@ def update_daily_disk_csv(path_to_check: Optional[str] = None, out_dir: Optional
     row = {
         "timestamp": datetime.datetime.now().isoformat(sep=" ", timespec="seconds"),
         "path": path_to_check,
-        "total_bytes": str(total),
-        "used_bytes": str(used),
-        "free_bytes": str(free),
+        "total_mb": f"{_bytes_to_mb(total):.2f}",
+        "used_mb": f"{_bytes_to_mb(used):.2f}",
+        "free_mb": f"{_bytes_to_mb(free):.2f}",
         "free_percent": f"{free_pct:.2f}",
         "total_human": _bytes_to_human(total),
         "used_human": _bytes_to_human(used),
@@ -80,9 +85,9 @@ def update_daily_disk_csv(path_to_check: Optional[str] = None, out_dir: Optional
     fieldnames = [
         "timestamp",
         "path",
-        "total_bytes",
-        "used_bytes",
-        "free_bytes",
+        "total_mb",
+        "used_mb",
+        "free_mb",
         "free_percent",
         "total_human",
         "used_human",
