@@ -23,8 +23,8 @@ import datetime
 from typing import Optional
 
 
-def _bytes_to_human(n: int) -> str:
-    # Convert bytes to a human readable string (KiB, MiB, ...)
+def _bytes_to_capacity(n: int) -> str:
+    # Convert bytes to a capacity readable string (KiB, MiB, ...)
     # Uses 1024 base.
     units = ["B", "KB", "MB", "GB", "TB", "PB"]
     value = float(n)
@@ -77,9 +77,9 @@ def update_daily_disk_csv(path_to_check: Optional[str] = None, out_dir: Optional
         "used_mb": f"{_bytes_to_mb(used):.2f}",
         "free_mb": f"{_bytes_to_mb(free):.2f}",
         "free_percent": f"{free_pct:.2f}",
-        "total_human": _bytes_to_human(total),
-        "used_human": _bytes_to_human(used),
-        "free_human": _bytes_to_human(free),
+        "total_capacity": _bytes_to_capacity(total),
+        "used_capacity": _bytes_to_capacity(used),
+        "free_capacity": _bytes_to_capacity(free),
     }
 
     fieldnames = [
@@ -89,9 +89,9 @@ def update_daily_disk_csv(path_to_check: Optional[str] = None, out_dir: Optional
         "used_mb",
         "free_mb",
         "free_percent",
-        "total_human",
-        "used_human",
-        "free_human",
+        "total_capacity",
+        "used_capacity",
+        "free_capacity",
     ]
 
     write_header = not os.path.exists(filepath)
